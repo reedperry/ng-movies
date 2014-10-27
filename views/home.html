@@ -1,0 +1,27 @@
+<div>
+    <div>
+        Title: {{main.movie.Title}}
+    </div>
+    <div>
+        Year: {{main.movie.Year}}
+    </div>
+    <div>
+        Director: {{main.movie.Director}}
+    </div>
+    <div>
+        Actors: {{main.movie.Actors}}
+    </div>
+    <div>
+        Plot: {{main.movie.Plot}}
+    </div>
+    <img ng-cloak ng-if="main.movie.Poster" src="{{main.movie.Poster}}"></img>
+    Movie title:
+    <input type="text" ng-model="main.search.title"/>
+    <button class="btn btn-primary" ng-click="main.getByTitle(main.search.title)">Search</button>
+    <div ng-if="main.errorMsg">{{main.errorMsg}}</div>
+
+    <div class="strong">History</div>
+    <div ng-repeat="previous in main.history">
+        <a href ng-click="main.loadFromHistory(previous)">{{previous.Title}} ({{previous.Year}})</a>
+    </div>
+</div>

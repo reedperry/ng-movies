@@ -1,0 +1,29 @@
+html {
+    font-family: 'Roboto', sans-serif;
+}
+
+.view-panel {
+    padding: 10px;
+}
+
+.animate-fade.ng-enter, .view-animate.ng-leave {
+    -webkit-transition: 0.2s linear;
+    transition: 0.2s linear;
+    position: absolute;
+}
+
+.animate-fade.ng-enter {
+    opacity: 0;
+}
+
+.animate-fade.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+.animate-fade.ng-leave {
+    opacity: 1;
+}
+
+.animate-fade.ng-leave.ng-leave-active {
+    opacity: 0;
+}
