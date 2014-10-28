@@ -4,11 +4,13 @@ controllers.controller('MainController', ['$location', 'omdb', function MainCont
 
     var HISTORY_LENGTH = 5;
 
+    main.searchResults = null;
     main.history = [];
     main.errorMsg = '';
 
     main.getByTitle = function(title) {
         main.clearCurrentMovie();
+        main.searchResults = null;
         omdb.getByTitle(title).success(function(data, status) {
             if (data.Response === 'False') {
                 main.errorMsg = data.Error;
@@ -26,14 +28,16 @@ controllers.controller('MainController', ['$location', 'omdb', function MainCont
                 main.errorMsg = data.Error;
             } else {
                 main.errorMsg = null;
-                main.movie = data;
+                main.searchResults = data.Search;
             }
         });
     };
 
     main.clearCurrentMovie = function() {
         if (main.movie) {
-            main.logToHistory(main.movie);
+            if (main.history.filter(function(m) {return m.imdbID === main.movie.imdbID}).length === 0) {
+                main.logToHistory(main.movie);
+            }
             main.movie = null;
         }
     };
@@ -54,6 +58,5 @@ controllers.controller('MainController', ['$location', 'omdb', function MainCont
             main.movie = movie;
         }
     };
-
 
 }]);
