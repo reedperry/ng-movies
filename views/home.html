@@ -1,32 +1,63 @@
-<div>
-    <div>
-        Title: {{main.movie.Title}}
+<div class="col-xs-8">
+    <div class="well">
+        <div>
+            <label class="control-label">Title:</label> {{main.movie.Title}}
+        </div>
+        <div>
+            <label class="control-label">Year:</label> {{main.movie.Year}}
+        </div>
+        <div>
+            <label class="control-label">Director:</label> {{main.movie.Director}}
+        </div>
+        <div>
+            <label class="control-label">Actors:</label> {{main.movie.Actors}}
+        </div>
+        <div>
+            <label class="control-label">Plot:</label> {{main.movie.Plot}}
+        </div>
+        <img ng-cloak ng-if="main.movie.Poster" class="img-responsive" src="{{main.movie.Poster}}"></img>
     </div>
-    <div>
-        Year: {{main.movie.Year}}
+
+    <div class="form-group">
+        <label class="control-label">Movie title:</label>
+        <input type="text" ng-model="main.search.title"/>
     </div>
-    <div>
-        Director: {{main.movie.Director}}
+
+    <div class="button-group">
+        <button class="btn btn-info" ng-click="main.getByTitle(main.search.title)">Exact Title</button>
+        <button class="btn btn-primary" ng-click="main.searchByTitle(main.search.title)">Search By Title</button>
     </div>
-    <div>
-        Actors: {{main.movie.Actors}}
-    </div>
-    <div>
-        Plot: {{main.movie.Plot}}
-    </div>
-    <img ng-cloak ng-if="main.movie.Poster" src="{{main.movie.Poster}}"></img>
-    Movie title:
-    <input type="text" ng-model="main.search.title"/>
-    <button class="btn btn-info" ng-click="main.getByTitle(main.search.title)">Exact Title</button>
-    <button class="btn btn-primary" ng-click="main.searchByTitle(main.search.title)">Search By Title</button>
+
     <div ng-if="main.errorMsg">{{main.errorMsg}}</div>
+</div>
 
-    <div ng-if="main.searchResults">
-        <div ng-repeat="result in main.searchResults track by result.imdbID">{{result.Title}} ({{result.Year}})</div>
-    </div>
-
-    <div class="strong">History</div>
-    <div ng-repeat="previous in main.history track by previous.imdbID">
-        <a href ng-click="main.loadFromHistory(previous)">{{previous.Title}} ({{previous.Year}})</a>
+<div class="col-xs-4">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title strong">History</div>
+        </div>
+        <div class="panel-body">
+            <div ng-repeat="previous in main.history track by previous.imdbID">
+                <a href ng-click="main.loadFromHistory(previous)">{{previous.Title}} ({{previous.Year}})</a>
+            </div>
+        </div>
     </div>
 </div>
+
+<div id="results" class="modal fade" role="dialog" tab-index="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Search Results</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-repeat="result in main.searchResults | orderBy: 'Title'">
+                    <a href data-dismiss="modal">{{result.Title}} ({{result.Year}})</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

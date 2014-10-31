@@ -26,9 +26,12 @@ controllers.controller('MainController', ['$location', 'omdb', function MainCont
         omdb.searchByTitle(title).success(function(data, status) {
             if (data.Response === 'False') {
                 main.errorMsg = data.Error;
+            } else if (!data.Search || data.Search.length == 0) {
+                main.errorMsg = 'No results for ' + title + '!';
             } else {
                 main.errorMsg = null;
                 main.searchResults = data.Search;
+                $('#results').modal('show');
             }
         });
     };
