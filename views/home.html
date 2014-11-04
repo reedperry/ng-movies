@@ -1,4 +1,28 @@
 <div class="col-xs-8">
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form class="form-inline" role="form" novalidate>
+                <div class="form-group">
+                    <label class="control-label" ng-show="main.search.type !== 'imdbId'">Movie title:</label>
+                    <label class="control-label" ng-show="main.search.type == 'imdbId'">IMDB Movie ID:</label>
+                    <input type="text" class="form-control" ng-model="main.search.value"/>
+                    <select class="form-control" ng-model="main.search.type">
+                        <option value="titleSearch">Title Search</option>
+                        <option value="exactTitle">Exact Title</option>
+                        <option value="imdbId">IMDB ID</option>
+                    </select>
+
+                    <span class="button-group">
+                        <button class="btn btn-success" ng-click="main.getMovies(main.search)">GO</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="alert alert-danger" role="alert" ng-if="main.errorMsg">{{main.errorMsg}}</div>
+
     <div class="well">
         <div>
             <label class="control-label">Title:</label> {{main.movie.Title}}
@@ -18,17 +42,6 @@
         <img ng-cloak ng-if="main.movie.Poster" class="img-responsive" src="{{main.movie.Poster}}"></img>
     </div>
 
-    <div class="form-group">
-        <label class="control-label">Movie title:</label>
-        <input type="text" ng-model="main.search.title"/>
-    </div>
-
-    <div class="button-group">
-        <button class="btn btn-info" ng-click="main.getByTitle(main.search.title)">Exact Title</button>
-        <button class="btn btn-primary" ng-click="main.searchByTitle(main.search.title)">Search By Title</button>
-    </div>
-
-    <div ng-if="main.errorMsg">{{main.errorMsg}}</div>
 </div>
 
 <div class="col-xs-4">
@@ -54,7 +67,8 @@
             </div>
             <div class="modal-body">
                 <div ng-repeat="result in main.searchResults | orderBy: 'Title'">
-                    <a href data-dismiss="modal">{{result.Title}} ({{result.Year}})</a>
+                    <a href ng-click="main.getById(result.imdbID); main.dismissDialog('results');">{{result.Title}} ({{result.Year}})</a>
+                    <span class="label label-primary">{{result.Type | uppercase}}</span>
                 </div>
             </div>
         </div>

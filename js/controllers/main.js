@@ -2,14 +2,47 @@ controllers.controller('MainController', ['$location', 'omdb', function MainCont
 
     var main = this;
 
-    var HISTORY_LENGTH = 5;
+    var HISTORY_LENGTH = 20;
 
+    main.search = {type:'exactTitle'};
     main.searchResults = null;
     main.history = [];
     main.errorMsg = '';
 
+    main.getMovies = function() {
+        main.clearCurrentMovie();
+        main.searchResults = null;
+        switch (main.search.type) {
+            case 'exactTitle':
+                main.getByTitle(main.search.value);
+                break;
+            case 'titleSearch':
+                main.searchByTitle(main.search.value);
+                break;
+            case 'imdbId':
+                main.getById(main.search.value);
+                break;
+        };
+    };
+
+
+    main.getById = function(id) {
+        main.clearCurrentMovie();
+        main.errorMsg = null;
+        main.searchResults = null;
+        omdb.getById(id).success(function(data, status) {
+            if (data.Response === 'False') {
+                main.errorMsg = data.Error;
+            } else {
+                main.errorMsg = null;
+                main.movie = data;
+            }
+        });
+    };
+
     main.getByTitle = function(title) {
         main.clearCurrentMovie();
+        main.errorMsg = null;
         main.searchResults = null;
         omdb.getByTitle(title).success(function(data, status) {
             if (data.Response === 'False') {
@@ -23,6 +56,7 @@ controllers.controller('MainController', ['$location', 'omdb', function MainCont
 
     main.searchByTitle = function(title) {
         main.clearCurrentMovie();
+        main.errorMsg = null;
         omdb.searchByTitle(title).success(function(data, status) {
             if (data.Response === 'False') {
                 main.errorMsg = data.Error;
@@ -62,4 +96,10 @@ controllers.controller('MainController', ['$location', 'omdb', function MainCont
         }
     };
 
+    // Would really rather avoid doing stuff like this...
+    // data-dismiss doesn't work after adding an ng-click
+    main.dismissDialog = function(id) {
+        $('#'+id).modal('hide');
+    }
 }]);
+
