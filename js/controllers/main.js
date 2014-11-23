@@ -70,6 +70,13 @@ controllers.controller('MainController', ['$location', 'omdb', function MainCont
         });
     };
 
+    main.posterUrl = function(id) {
+        if (!id) {
+            return "";
+        }
+        return omdb.getPosterUrl(id);
+    };
+
     main.clearCurrentMovie = function() {
         if (main.movie) {
             if (main.history.filter(function(m) {return m.imdbID === main.movie.imdbID}).length === 0) {

@@ -1,6 +1,7 @@
 services.factory('omdb', ['$http', '$log', function($http, $log) {
 
-    var BASE_URL = 'http://imdbapi.com/';
+    var BASE_URL = 'http://omdbapi.com/';
+    var POSTER_URL = 'http://img.omdbapi.com/?apikey=20e8506b';
 
     function getIdFetchUrl(id) {
         return BASE_URL + '?i='+id
@@ -12,6 +13,10 @@ services.factory('omdb', ['$http', '$log', function($http, $log) {
 
     function getTitleSearchUrl(title) {
         return BASE_URL + '?s='+title
+    }
+
+    function getPosterUrl(id) {
+        return POSTER_URL + '&i='+id
     }
 
     var omdb = {
@@ -59,7 +64,25 @@ services.factory('omdb', ['$http', '$log', function($http, $log) {
                 error(function(data, status) {
                     $log.log('Error getting movie data. Status: ' + status);
                 });
+        },
+
+        getPosterUrl: getPosterUrl,
+
+        getPoster: function(id) {
+            if (!id) {
+                $log.log('Must provide an id to get poster.');
+            }
+            var url = getPosterUrl(id);
+
+            return $http.get(url).
+                success(function(data, status) {
+                    $log.log('Got poster for id: %s', id);
+                }).
+                error(function(data, status) {
+                    $log.log('Error getting poster for id %s. Status: %s', id, status);
+                });
         }
+
     };
 
     return omdb;

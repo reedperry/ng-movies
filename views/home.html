@@ -39,7 +39,7 @@
         <div>
             <label class="control-label">Plot:</label> {{main.movie.Plot}}
         </div>
-        <img ng-cloak ng-if="main.movie.Poster" class="img-responsive" src="{{main.movie.Poster}}"></img>
+        <img ng-cloak ng-if="main.movie" class="img-responsive" src="{{main.posterUrl(main.movie.imdbID)}}"></img>
     </div>
 
 </div>
@@ -76,6 +76,6 @@
 </div>
 
 <div class="col-xs-12">
-    <div>All data provided by the <a href="http://www.omdbapi.com/">OMDB API</a> by Brian Fritz.</div>
+    <div>All data provided by the <a href="http://www.omdbapi.com/">OMDB API</a>.</div>
     <div>Licensed under <a href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a>.</div>
 </div>
