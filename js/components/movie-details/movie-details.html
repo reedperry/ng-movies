@@ -1,0 +1,18 @@
+<div class="well">
+  <div>
+    <label class="control-label">Title:</label> {{main.movie.Title}}
+  </div>
+  <div>
+    <label class="control-label">Year:</label> {{main.movie.Year}}
+  </div>
+  <div>
+    <label class="control-label">Director:</label> {{main.movie.Director}}
+  </div>
+  <div>
+    <label class="control-label">Actors:</label> {{main.movie.Actors}}
+  </div>
+  <div>
+    <label class="control-label">Plot:</label> {{main.movie.Plot}}
+  </div>
+  <img ng-cloak ng-if="main.movie" class="img-responsive" src="{{main.posterUrl(main.movie.imdbID)}}"></img>
+</div>

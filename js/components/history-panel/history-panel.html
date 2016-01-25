@@ -1,0 +1,12 @@
+<div class="col-xs-4">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title strong">History</div>
+        </div>
+        <div class="panel-body">
+            <div ng-repeat="previous in main.history track by previous.imdbID">
+                <a href ng-click="main.loadFromHistory(previous)">{{previous.Title}} ({{previous.Year}})</a>
+            </div>
+        </div>
+    </div>
+</div>
